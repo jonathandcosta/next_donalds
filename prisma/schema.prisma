@@ -43,10 +43,10 @@ model Product {
   description    String
   price          Float
   imageUrl       String
-  ingredients    String
+  ingredients    String[]
+  orderProducts  OrderProduct[]
   restaurant     Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId   String
-  orderProducts  OrderProduct[]
   menuCategory   MenuCategory   @relation(fields: [menuCategoryId], references: [id], onDelete: Cascade)
   menuCategoryId String
   createdAt      DateTime       @default(now())
@@ -54,15 +54,15 @@ model Product {
 }
 
 model Order {
-  id                 Int               @id @default(autoincrement())
-  total              Float
-  status             OrderStatus
-  consumoptionMethod ConsumptionMethod
-  restaurant         Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  restaurantId       String
-  orderProducts      OrderProduct[]
-  createdAt          DateTime          @default(now())
-  updatedAt          DateTime          @updatedAt
+  id                Int               @id @default(autoincrement())
+  total             Float
+  status            OrderStatus
+  consumptionMethod ConsumptionMethod
+  restaurant        Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId      String
+  orderProducts     OrderProduct[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 }
 
 model OrderProduct {
@@ -73,7 +73,7 @@ model OrderProduct {
   orderId   Int
   quantity  Int
   price     Float
-  cretedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
@@ -84,6 +84,6 @@ enum OrderStatus {
 }
 
 enum ConsumptionMethod {
-  TAKEWAY
+  TAKEAWAY
   DINE_IN
 }
