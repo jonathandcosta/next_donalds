@@ -1,10 +1,16 @@
-import { Restaurant } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
 
 
 interface RestaurantCategoriesProps {
-  restaurant: Restaurant
+  restaurant: Prisma.RestaurantGetPayload<{
+    include: {
+      menuCategories: {
+        include: { products: true }
+      }
+    }
+  }>
 }
 
 const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
