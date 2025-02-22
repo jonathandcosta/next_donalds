@@ -8,12 +8,13 @@ interface RestaurantMenuPageProps {
 }
 
 const isConsumptionMethodValid = (consumptionMethod: string) => {
-  return ["DINE-IN", "TAKEAWAY"].includes(consumptionMethod.toUpperCase())
+  return ["DINE_IN", "TAKEAWAY"].includes(consumptionMethod)
 }
 
 const RestaurantMenuPage = async ({ params, searchParams }: RestaurantMenuPageProps) => {
   const { slug } = await params
   const { consumptionMethod } = await searchParams
+
   if (!isConsumptionMethodValid(consumptionMethod)) {
     return notFound()
   }
