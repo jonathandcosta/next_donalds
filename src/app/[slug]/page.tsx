@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { getRestaurantBySlug } from "@/data/get-restaurant-by-slug";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import ConsumptionMethodOption from "./components/consumption-method-option";
 
 interface RestaurantPageProps {
   params: Promise<{ slug: string }>
@@ -32,38 +31,16 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
       <p className="opacity-55">Escolha como prefere aproveitar sua refeição. Estamos aqui para oferecer praticidade e sabor em cada detalhe!</p>
     </div>
     <div className="pt-14 grid grid-cols-2 gap-4">
-      <Card>
-        <CardContent className="flex flex-col items-center gap-8 py-8">
-          <div className="relative h-[80px] w-[80px]">
-            <Image
-              src="/dine-in.svg"
-              fill
-              alt="Para comer aqui"
-              className="object-contain"
-            />
-          </div>
-          <Button
-            className="rounded-full" variant='secondary'>
-            Para comer aqui
-          </Button>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardContent className="flex flex-col items-center gap-8 py-8">
-          <div className="relative h-[80px] w-[80px]">
-            <Image
-              src="/takeaway.svg"
-              fill
-              alt="Para levar"
-              className="object-contain"
-            />
-          </div>
-          <Button
-            className="rounded-full" variant='secondary'>
-            Para levar
-          </Button>
-        </CardContent>
-      </Card>
+      <ConsumptionMethodOption
+        buttonText="Para comer aqui"
+        imageAlt="comer aqui"
+        imageUrl="/dine-in.svg"
+      />
+      <ConsumptionMethodOption
+        buttonText="Para levar"
+        imageAlt="para levar"
+        imageUrl="/takeaway.svg"
+      />
 
     </div>
   </div>
