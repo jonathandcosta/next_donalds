@@ -25,7 +25,7 @@ const ConsumptionMethodOption = ({ imageUrl, imageAlt, buttonText, option, slug 
         />
       </div>
       <Button
-        className="rounded-full" variant='secondary'>
+        className="rounded-full" variant='secondary' asChild>
         <Link href={`/${slug}/menu?consumptionMethod=${option}`}>
           {buttonText}
         </Link>
