@@ -1,8 +1,11 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Prisma } from "@prisma/client";
+import { MenuCategory, Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 
 interface RestaurantCategoriesProps {
@@ -16,6 +19,17 @@ interface RestaurantCategoriesProps {
 }
 
 const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
+
+  // armazena o botão selecionado
+  const [selectedCategory, setSelectedCategory] = useState<MenuCategory>(restaurant.menuCategories[0])
+
+  // seleciona o botão de uma categoria
+  const handleCategoryClick = (category: MenuCategory) => { setSelectedCategory(category); }
+
+  // muda a cor do botão selecionado
+  const getCategoryButtonVariant = (category: MenuCategory) => {
+    return selectedCategory.id === category.id ? 'default' : 'secondary'
+  }
 
   return (
     <div className="relative z-50 mt-[-1.5rem] rounded-t-3xl border bg-white ">
@@ -41,8 +55,9 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
         <div className="flex w-max space-x-4 p-4 pt-0">
           {restaurant.menuCategories.map(category => (
             <Button
+              onClick={() => handleCategoryClick(category)}
               key={category.id}
-              variant="secondary"
+              variant={getCategoryButtonVariant(category)}
               size='sm'
               className="rounded-full">
               {category.name}
