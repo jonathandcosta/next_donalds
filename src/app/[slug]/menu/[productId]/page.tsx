@@ -1,5 +1,6 @@
 import { db } from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import ProductHeader from "./components/product-header";
 
 interface ProductPageProps {
   params: Promise<{ slug: string; productId: string }>
@@ -16,6 +17,8 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
   return (
     <>
+      <ProductHeader product={product} />
+
       <h1>Product Page</h1>
       {slug}
       {productId}
