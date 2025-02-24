@@ -1,11 +1,12 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { MenuCategory, Prisma } from "@prisma/client";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import ProductsList from "./products-list";
 
 
 interface RestaurantCategoriesProps {
@@ -18,21 +19,25 @@ interface RestaurantCategoriesProps {
   }>
 }
 
+type MenuCategoriesWithProducts = Prisma.MenuCategoryGetPayload<{
+  include: { products: true }
+}>
+
 const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
 
   // armazena o botão selecionado
-  const [selectedCategory, setSelectedCategory] = useState<MenuCategory>(restaurant.menuCategories[0])
+  const [selectedCategory, setSelectedCategory] = useState<MenuCategoriesWithProducts>(restaurant.menuCategories[0])
 
   // seleciona o botão de uma categoria
-  const handleCategoryClick = (category: MenuCategory) => { setSelectedCategory(category); }
+  const handleCategoryClick = (category: MenuCategoriesWithProducts) => { setSelectedCategory(category); }
 
   // muda a cor do botão selecionado
-  const getCategoryButtonVariant = (category: MenuCategory) => {
+  const getCategoryButtonVariant = (category: MenuCategoriesWithProducts) => {
     return selectedCategory.id === category.id ? 'default' : 'secondary'
   }
 
   return (
-    <div className="relative z-50 mt-[-1.5rem] rounded-t-3xl border bg-white ">
+    <div className="relative z-50 mt-[-1.5rem] rounded-t-3xl bg-white ">
       <div className="p-5">
         <div className="flex items-center gap-3">
           <Image
@@ -64,7 +69,11 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
             </Button>
           ))}
         </div>
+        <ScrollBar />
       </ScrollArea>
+      <p className="px-5 pt-2 font-semibold">{selectedCategory.name}</p>
+      <ProductsList products={selectedCategory.products} />
+
     </div>);
 }
 
